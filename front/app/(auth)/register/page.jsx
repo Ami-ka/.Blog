@@ -4,6 +4,7 @@ import Card from "@/app/components/Card";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { registerUser } from "@/services/api";
 export default function registerpage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,16 +13,14 @@ export default function registerpage() {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleSubit = async (e) => {
+  const handleSubmit = async (e) => {
     
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try{
-      const response = await axios.post('http://127.0.0.1:8000/api/v1/register',
-        {name,email,password},
-        );
+      const response = await registerUser(name, email, password);
       const token = response.data.token;
       localStorage.setItem('token', token);
       router.push('/');
@@ -37,7 +36,7 @@ export default function registerpage() {
 
   return (
     <Card>
-      <form className="space-y-4 " onSubmit={handleSubit}>
+      <form className="space-y-4 " onSubmit={handleSubmit}>
         {error && (
         <div className="bg-red-500 text-white p-2 rounded text-sm">
           {error}

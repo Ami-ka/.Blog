@@ -5,32 +5,29 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import axios from "axios";
 import AuthContext from "@/app/context/AuthContext";
+import { loginUser } from "@/services/api";
+import { sleep } from "@/utils/sleep";
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
 
-export default function loginpage() {
+
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const logState = useContext(AuthContext);
-  const handleSubit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/api/v1/login", {
-        email,
-        password,
-      });
+      const response = await loginUser(email, password);
 
       const token = response.data.token;
       localStorage.setItem("token", token);
-      await sleep(1500);
+      await sleep(1000);
       router.replace("/"); //TO-DO when profile will be finished redirect to profile
       logState.setLogIn();
     } catch (error) {
@@ -46,7 +43,7 @@ export default function loginpage() {
 
   return (
     <Card>
-      <form className="space-y-4" onSubmit={handleSubit}>
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
           <label
             htmlFor="login"

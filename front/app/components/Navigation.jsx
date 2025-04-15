@@ -2,10 +2,12 @@
 import Link from "next/link";
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
-import { CircleUserRound } from "lucide-react";
+import Image from "next/image";
+
 
 export default function Header() {
   const logState = useContext(AuthContext);
+  
   return (
     <header className="sticky top-0 flex justify-between px-[16px] border-1 border-[#302F3F] py-[16px] ">
       <Link
@@ -24,9 +26,7 @@ export default function Header() {
           </Link>
         )}
         {logState.isLogIn && (
-          <Link href="/profile">
-            <CircleUserRound size={36} color="#F07E7F" strokeWidth={1.75} />
-          </Link>
+          
         )}
       </div>
     </header>
