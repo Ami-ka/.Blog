@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function profile(){
     return(
         <Card>
-            <div className="px-20 pb-100 ">
+            <div className=" l:h-150 l:px-50 ">
                 <Image
                 src="/icons/user.svg"
                 width={100}

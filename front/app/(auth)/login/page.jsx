@@ -1,63 +1,52 @@
-'use client'
-import Link from "next/link";
+"use client";
 import Card from "@/app/components/Card";
-import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useContext, useState } from "react";
 import axios from "axios";
-export default function registerpage() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] =  useState("");
-  const [isLoading, setIsLoading] =  useState(false);
-  const [error, setError] = useState("");
-  const router = useRouter();
+import AuthContext from "@/app/context/AuthContext";
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+export default function loginpage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const logState = useContext(AuthContext);
   const handleSubit = async (e) => {
-    
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    try{
-      const response = await axios.post('http://127.0.0.1:8000/api/v1/register',
-        {name,email,password},
-        );
-      const token = response.data.token;
-      localStorage.setItem('token', token);
-      router.push('/');
+    try {
+      const response = await axios.post("http://127.0.0.1:8000/api/v1/login", {
+        email,
+        password,
+      });
 
-    }
-    catch (err){
-      setError(err.response?.data?.message || "ошибка регистрации")
-    }
-    finally{
+      const token = response.data.token;
+      localStorage.setItem("token", token);
+      await sleep(1500);
+      router.replace("/"); //TO-DO when profile will be finished redirect to profile
+      logState.setLogIn();
+    } catch (error) {
+      if (error.response && error.response.status == 401) {
+        setError("wrong password or email");
+      } else {
+        setError("Authentifictaion failed");
+      }
+    } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <Card>
-      <form className="space-y-4 " onSubmit={handleSubit}>
-        {error && (
-        <div className="bg-red-500 text-white p-2 rounded text-sm">
-          {error}
-        </div>
-      )}
-        <div>
-          <label
-            htmlFor="login"
-            className="block text-white text-sm font-bold mb-2"
-          >
-            User name:
-          </label>
-          <input
-            id="login"
-            name="username"
-            value={name}
-            onChange={(e) => {setName(e.target.value)}}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-white border-gray-600 mb-3 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
+      <form className="space-y-4" onSubmit={handleSubit}>
         <div>
           <label
             htmlFor="login"
@@ -66,12 +55,14 @@ export default function registerpage() {
             Email:
           </label>
           <input
-            id="login"
-            name="email"
+            name="login"
             type="email"
-            value={email}
-            onChange={(e) => {setEmail(e.target.value)}}
+            required
             className="shadow appearance-none border rounded w-full py-2 px-3 text-white border-gray-600 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
         </div>
         <div>
@@ -83,26 +74,28 @@ export default function registerpage() {
           </label>
           <input
             id="password"
-            name="password"
             type="password"
-            value={password}
-            onChange={(e) => {setPassword(e.target.value)}}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-white border-gray-600 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            required
+            value={password}
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
           />
         </div>
         <div className="flex items-center justify-between">
           <button
             className="bg-[#B4499D] hover:bg-gradient-to-r hover:from-[#B4499D] hover:to-[#F07E7F] transition-colors duration-300 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
             type="submit"
-            disabled = {isLoading}
+            disabled={isLoading}
           >
-            {isLoading? "Submit...":"Sign up"}
+            {isLoading ? "Submit..." : "Log in"}
           </button>
           <Link
             className="inline-block align-baseline font-semibold text-sm text-[#B4499D] hover:text-[#F07E7F]"
-            href="/login"
+            href="/register"
           >
-            Log in
+            Sign up
           </Link>
         </div>
       </form>

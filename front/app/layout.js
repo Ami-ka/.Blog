@@ -1,6 +1,7 @@
 import Header from "./components/Navigation";
+import { AuthProvider } from "./context/AuthContext";
 import "./globals.css";
-import {Lunasima} from 'next/font/google';
+import { Lunasima } from "next/font/google";
 
 const lunasima = Lunasima({
   weight: ["400", "700"], // можно выбрать нужные веса
@@ -12,8 +13,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={lunasima.variable}>
       <body>
-        <Header></Header>
-        {children}
+        <AuthProvider>
+          <Header></Header>
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );
