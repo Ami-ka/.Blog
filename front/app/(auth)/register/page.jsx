@@ -23,7 +23,7 @@ export default function registerpage() {
       const response = await registerUser(name, email, password);
       const token = response.data.token;
       localStorage.setItem('token', token);
-      router.push('/');
+      router.push('/profile');
 
     }
     catch (err){

@@ -3,13 +3,21 @@ import Link from "next/link";
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
 import Image from "next/image";
-
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarTrigger,
+} from "@radix-ui/react-menubar";
+import { Menu } from "lucide-react";
 
 export default function Header() {
   const logState = useContext(AuthContext);
-  
+
   return (
-    <header className="sticky top-0 flex justify-between px-[16px] border-1 border-[#302F3F] py-[16px] ">
+    <header className="sticky top-0 flex justify-between items-center px-[16px] border-1 border-[#302F3F] py-[12px] ">
       <Link
         href="/"
         className="bg-gradient-to-r from-[#F07E7F] to-[#B4499D] bg-clip-text text-transparent font-bold text-xl"
@@ -26,7 +34,27 @@ export default function Header() {
           </Link>
         )}
         {logState.isLogIn && (
-          
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger>
+                <div className="rounded-[8px] m-0 p-0.5 hover:bg-gradient-to-r hover:from-[var(--fiolet)] hover:to-[var(--orange)] transition-colors duration-300">
+                  <Menu size={32} strokeWidth={2.5} />
+                </div>
+              </MenubarTrigger>
+              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base p-2  mr-2 mt-2">
+                <MenubarItem className="w-20 hover:bg-[#403E55] py-1 rounded-[8px]">
+                  <Link href="/profile" className="">
+                    Profile
+                  </Link>
+                </MenubarItem>
+                <MenubarSeparator className="h-2"></MenubarSeparator>
+                <MenubarItem className="w-20 py-1 hover:bg-[#403E55] rounded-[8px]">
+                  <Link href="/blog" className="">blog</Link>
+                </MenubarItem>
+                
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
         )}
       </div>
     </header>
