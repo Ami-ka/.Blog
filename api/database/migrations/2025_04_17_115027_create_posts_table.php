@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     /**
      * Run the migrations.
      */
@@ -12,10 +13,12 @@ return new class extends Migration {
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // внеш. ключ
-            $table->string('title');
-            $table->text('content'); // HTML из TinyMCE
+            $table->unsignedBigInteger('user_id');
+            $table->string('heading');
+            $table->text('content');
+            $table->unsignedInteger('likes')->default(0);
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

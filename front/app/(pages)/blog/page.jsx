@@ -5,116 +5,54 @@ import Card from "@/app/components/Card";
 import PostCard from "@/app/components/PostCard";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { getPosts, getUser } from "@/services/api";
 
 export default function Editor() {
-  const router = useRouter(); 
-  function handleCreate(){
-    router.push("/")
+  const router = useRouter();
+  const [blogname, setBlogname] = useState(null);
+  const [posts, setPosts] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null); 
+
+  
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const response = await getPosts();
+        const user = await getUser();
+        setBlogname(user.data.blogname)
+        console.log(response); 
+        setPosts(response.data.posts); 
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setError("Ошибка при загрузке постов");
+        setLoading(false);
+      }
+    }
+
+    fetchPosts(); 
+  }, []); 
+
+  function handleCreate() {
+    router.push("/");
   }
-  const posts = [
-    {
-      title: "Как использовать TinyMCE в Next.js",
-      date: "16 апр 2025",
-      description:
-        "В этом посте мы рассмотрим интеграцию текстового редактора TinyMCE в проект Next.js с учетом SSR и client components.",
-      likes: 24,
-      author: "Алексей",
-    },
-    {
-      title: "Flexbox или Grid?",
-      date: "12 апр 2025",
-      description:
-        "Разбираем случаи, когда лучше использовать Flexbox, а когда Grid Layout. Примеры из реальных проектов.",
-      likes: 15,
-      author: "Катя",
-    },
-    {
-      title: "Tailwind Tips & Tricks",
-      date: "10 апр 2025",
-      description:
-        "Небольшая подборка хитростей и классных приёмов при работе с Tailwind CSS.",
-      likes: 42,
-      author: "Игорь",
-    },
-    {
-      title: "Как использовать TinyMCE в Next.js",
-      date: "16 апр 2025",
-      description:
-        "В этом посте мы рассмотрим интеграцию текстового редактора TinyMCE в проект Next.js с учетом SSR и client components.",
-      likes: 24,
-      author: "Алексей",
-    },
-    {
-      title: "Flexbox или Grid?",
-      date: "12 апр 2025",
-      description:
-        "Разбираем случаи, когда лучше использовать Flexbox, а когда Grid Layout. Примеры из реальных проектов.",
-      likes: 15,
-      author: "Катя",
-    },
-    {
-      title: "Tailwind Tips & Tricks",
-      date: "10 апр 2025",
-      description:
-        "Небольшая подборка хитростей и классных приёмов при работе с Tailwind CSS.",
-      likes: 42,
-      author: "Игорь",
-    },{
-      title: "Как использовать TinyMCE в Next.js",
-      date: "16 апр 2025",
-      description:
-        "В этом посте мы рассмотрим интеграцию текстового редактора TinyMCE в проект Next.js с учетом SSR и client components.",
-      likes: 24,
-      author: "Алексей",
-    },
-    {
-      title: "Flexbox или Grid?",
-      date: "12 апр 2025",
-      description:
-        "Разбираем случаи, когда лучше использовать Flexbox, а когда Grid Layout. Примеры из реальных проектов.",
-      likes: 15,
-      author: "Катя",
-    },
-    {
-      title: "Tailwind Tips & Tricks",
-      date: "10 апр 2025",
-      description:
-        "Небольшая подборка хитростей и классных приёмов при работе с Tailwind CSS.",
-      likes: 42,
-      author: "Игорь",
-    },{
-      title: "Как использовать TinyMCE в Next.js",
-      date: "16 апр 2025",
-      description:
-        "В этом посте мы рассмотрим интеграцию текстового редактора TinyMCE в проект Next.js с учетом SSR и client components.",
-      likes: 24,
-      author: "Алексей",
-    },
-    {
-      title: "Flexbox или Grid?",
-      date: "12 апр 2025",
-      description:
-        "Разбираем случаи, когда лучше использовать Flexbox, а когда Grid Layout. Примеры из реальных проектов.",
-      likes: 15,
-      author: "Катя",
-    },
-    {
-      title: "Tailwind Tips & Tricks",
-      date: "10 апр 2025",
-      description:
-        "Небольшая подборка хитростей и классных приёмов при работе с Tailwind CSS.",
-      likes: 42,
-      author: "Игорь",
-    },
-  ];
+
+  if (loading) {
+    return <div>Loading...</div>; 
+  }
+
+  if (error) {
+    return <div>{error}</div>; 
+  }
 
   return (
     <div className=" h-100">
       <div className="lg:mx-50 mx-0 md:mx-15 mt-10">
         <Card className=" ">
           <header className="flex justify-between items-center">
-            <h1 className="font-bold  text-xl">Blog Name</h1>
+            <h1 className="font-bold text-xl">{blogname}</h1>
             <Button className="" onClick={handleCreate}>
               <div className="flex text-base items-center justify-between gap-1">
                 New post <Plus size={20} strokeWidth={2.75} />

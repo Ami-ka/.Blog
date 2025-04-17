@@ -45,8 +45,25 @@ export const logOutUser = async () =>{
     localStorage.removeItem('token');
     throw error;
   }
-  localStorage.removeItem('token');
+  
 
 }
+
+
+
+export async function getPosts() {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await api.get("/posts", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response; 
+  } catch (error) {
+    throw error; 
+  }
+}
+
 
 export default api;

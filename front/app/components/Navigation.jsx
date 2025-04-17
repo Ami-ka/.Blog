@@ -55,7 +55,7 @@ export default function Header() {
                   <Menu size={32} strokeWidth={2.5} />
                 </div>
               </MenubarTrigger>
-              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base py-2 px-3 mr-2 mt-2">
+              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base py-2 px-3 mr-2 mt-2 shadow-xl">
                 <Link href="/profile" className="">
                   <MenubarItem className="flex space-x-2  w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
                   <CircleUserRound /> <span>Profile</span>
