@@ -46,10 +46,16 @@ class AuthController extends Controller
         return response()->json($request ->user());
     }
     public function logout(Request $request){
-        $request->user()->tokens->each(function ($token){
+        $token = $request->user()->currentAccessToken();
+        if($token != null){
             $token->delete();
-        });
-        return response()->json(['message'=> 'sucessful logout']);
+            return response()->json(['message'=> 'sucessful logout']);
+        }
+        else{
+            return response()->json(['message'=> 'no active token'],400);
+        }
+
+        
     }
 
 }

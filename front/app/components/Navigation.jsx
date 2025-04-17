@@ -11,10 +11,24 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@radix-ui/react-menubar";
-import { Menu } from "lucide-react";
+import { CircleUserRound, LogOut, Menu, NotebookPen } from "lucide-react";
+import { logOutUser } from "@/services/api";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
   const logState = useContext(AuthContext);
+  const router = useRouter();
+
+  async function handleLogOut(){
+    
+    const response = await logOutUser();
+
+    if(response){
+      logState.setIsLogIn(false);
+      router.push('/');
+    }
+
+  }
 
   return (
     <header className="bg-[var(--background)] sticky top-0 flex justify-between items-center px-[16px] border-1 border-[#302F3F] py-[12px] ">
@@ -41,18 +55,22 @@ export default function Header() {
                   <Menu size={32} strokeWidth={2.5} />
                 </div>
               </MenubarTrigger>
-              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base p-2  mr-2 mt-2">
+              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base py-2 px-3 mr-2 mt-2">
                 <Link href="/profile" className="">
-                  <MenubarItem className="w-20 hover:bg-[#403E55] py-1 rounded-[8px]">
-                    Profile
+                  <MenubarItem className="flex space-x-2  w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
+                  <CircleUserRound /> <span>Profile</span>
                   </MenubarItem>
                 </Link>
                 <MenubarSeparator className="h-2"></MenubarSeparator>
                 <Link href="/blog" className="">
-                  <MenubarItem className="w-20 py-1 hover:bg-[#403E55] rounded-[8px]">
-                    blog
+                  <MenubarItem className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
+                  <NotebookPen /><span>Blog</span>
                   </MenubarItem>
                 </Link>
+                <MenubarSeparator className="h-2"></MenubarSeparator>
+                <MenubarItem className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px] text-[var(--fiolet)]" onClick={handleLogOut}>
+                <LogOut color="#B4499D"/><span>Log Out</span>
+                </MenubarItem>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>

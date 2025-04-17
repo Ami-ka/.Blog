@@ -29,7 +29,7 @@ export default function LoginPage() {
       localStorage.setItem("token", token);
       await sleep(1000);
       router.replace("/"); //TO-DO when profile will be finished redirect to profile
-      logState.setLogIn();
+      logState.setIsLogIn(true);
     } catch (error) {
       if (error.response && error.response.status == 401) {
         setError("wrong password or email");

@@ -1,5 +1,6 @@
 "use client";
 import Card from "@/app/components/Card";
+import { getUser } from "@/services/api";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -17,11 +18,7 @@ export default function profile() {
         return;
       }
       try {
-        const response = await axios.get("http://192.168.176.33:8000/api/v1/me", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await getUser();
         console.log("response:", response.data);
 
         setUserData(response.data);
@@ -40,7 +37,7 @@ export default function profile() {
 
     <div className="flex justify-center items-center h-[85vh]">
     <Card>
-      <div className="xl:h-150 w-90">
+      <div className="xl:h-150 xl:w-90 h-100">
         <div className="flex">
           <Image
             src="/icons/user.svg"

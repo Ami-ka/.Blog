@@ -1,10 +1,10 @@
 'use client'
 import Link from "next/link";
 import Card from "@/app/components/Card";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { registerUser } from "@/services/api";
+import AuthContext from "@/app/context/AuthContext";
 export default function registerpage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -12,6 +12,7 @@ export default function registerpage() {
   const [isLoading, setIsLoading] =  useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const logState = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     
@@ -23,6 +24,7 @@ export default function registerpage() {
       const response = await registerUser(name, email, password);
       const token = response.data.token;
       localStorage.setItem('token', token);
+      logState.setIsLogIn(true);
       router.push('/profile');
 
     }
