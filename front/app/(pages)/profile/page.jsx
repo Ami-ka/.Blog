@@ -17,7 +17,7 @@ export default function profile() {
         return;
       }
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/v1/me", {
+        const response = await axios.get("http://192.168.176.33:8000/api/v1/me", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -37,6 +37,8 @@ export default function profile() {
     return <>loading</>;
   }
   return (
+
+    <div className="flex justify-center items-center h-[85vh]">
     <Card>
       <div className="xl:h-150 w-90">
         <div className="flex">
@@ -56,5 +58,6 @@ export default function profile() {
         </div>
       </div>
     </Card>
+    </div>
   );
 }

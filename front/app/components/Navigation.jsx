@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useContext, useState } from "react";
 import AuthContext from "../context/AuthContext";
-import Image from "next/image";
+
 import {
   Menubar,
   MenubarContent,
@@ -17,7 +17,7 @@ export default function Header() {
   const logState = useContext(AuthContext);
 
   return (
-    <header className="sticky top-0 flex justify-between items-center px-[16px] border-1 border-[#302F3F] py-[12px] ">
+    <header className="bg-[var(--background)] sticky top-0 flex justify-between items-center px-[16px] border-1 border-[#302F3F] py-[12px] ">
       <Link
         href="/"
         className="bg-gradient-to-r from-[#F07E7F] to-[#B4499D] bg-clip-text text-transparent font-bold text-xl"
@@ -42,16 +42,17 @@ export default function Header() {
                 </div>
               </MenubarTrigger>
               <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base p-2  mr-2 mt-2">
-                <MenubarItem className="w-20 hover:bg-[#403E55] py-1 rounded-[8px]">
-                  <Link href="/profile" className="">
+                <Link href="/profile" className="">
+                  <MenubarItem className="w-20 hover:bg-[#403E55] py-1 rounded-[8px]">
                     Profile
-                  </Link>
-                </MenubarItem>
+                  </MenubarItem>
+                </Link>
                 <MenubarSeparator className="h-2"></MenubarSeparator>
-                <MenubarItem className="w-20 py-1 hover:bg-[#403E55] rounded-[8px]">
-                  <Link href="/blog" className="">blog</Link>
-                </MenubarItem>
-                
+                <Link href="/blog" className="">
+                  <MenubarItem className="w-20 py-1 hover:bg-[#403E55] rounded-[8px]">
+                    blog
+                  </MenubarItem>
+                </Link>
               </MenubarContent>
             </MenubarMenu>
           </Menubar>

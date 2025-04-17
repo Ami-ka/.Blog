@@ -42,6 +42,7 @@ export default function LoginPage() {
   };
 
   return (
+    <div className="flex justify-center items-center h-[85vh]">
     <Card>
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div>
@@ -97,5 +98,6 @@ export default function LoginPage() {
         </div>
       </form>
     </Card>
+    </div>
   );
 }

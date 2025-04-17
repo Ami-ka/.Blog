@@ -35,6 +35,7 @@ export default function registerpage() {
   }
 
   return (
+    <div className="flex justify-center items-center h-[85vh]">
     <Card>
       <form className="space-y-4 " onSubmit={handleSubmit}>
         {error && (
@@ -106,5 +107,6 @@ export default function registerpage() {
         </div>
       </form>
     </Card>
+    </div>
   );
 }
