@@ -7,23 +7,24 @@ import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React, { useState, useEffect } from "react";
 import { getPosts, getUser } from "@/services/api";
+import Link from "next/link";
 
 export default function Editor() {
   const router = useRouter();
   const [blogname, setBlogname] = useState(null);
-  const [posts, setPosts] = useState([]); 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); 
+  const [posts, setPosts] = useState([]);
 
-  
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     async function fetchPosts() {
       try {
         const response = await getPosts();
         const user = await getUser();
-        setBlogname(user.data.blogname)
-        console.log(response); 
-        setPosts(response.data.posts); 
+        setBlogname(user.data.blogname);
+        console.log(response);
+        setPosts(response.data.posts);
         setLoading(false);
       } catch (err) {
         console.error(err);
@@ -32,19 +33,20 @@ export default function Editor() {
       }
     }
 
-    fetchPosts(); 
-  }, []); 
+    fetchPosts();
+  }, []);
 
   function handleCreate() {
-    router.push("/");
+    router.push("/blog/new");
   }
+  function redirect() {}
 
   if (loading) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return <div>{error}</div>; 
+    return <div>{error}</div>;
   }
 
   return (

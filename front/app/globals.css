@@ -1,29 +1,32 @@
 @import "tailwindcss";
 
-
-
 :root {
-  --background: #21202A;
-  --foreground: #ffffff;
-  --font-lunasima: Lunasima, sans-serif;
-  --fiolet: #B4499D;
-  --orange:#F07E7F;
-  --card:#44435A;
+    --background: #21202a;
+    --foreground: #ffffff;
+    --font-lunasima: Lunasima, sans-serif;
+    --fiolet: #b4499d;
+    --orange: #f07e7f;
+    --card: #44435a;
 }
 
-
-
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #21202A;
-    --foreground: #ededed;
-    ;
-  }
+    :root {
+        --background: #21202a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  font-family: var(--font-lunasima);
+    background: var(--background);
+    color: var(--foreground);
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-lunasima);
+}
+
+.ProseMirror {
+    position: static !important;
+    background-color: var(--card);
+    margin-top: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
 }

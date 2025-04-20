@@ -1,6 +1,6 @@
+import { Content } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_URL,
@@ -23,33 +23,28 @@ export const getUser = () => {
   });
 };
 
-export const logOutUser = async () =>{
-  const token = localStorage.getItem('token');
-  
-  try{
+export const logOutUser = async () => {
+  const token = localStorage.getItem("token");
+
+  try {
     const response = await api.post(
-      "/logout",        
-      {},               
-      {                 
+      "/logout",
+      {},
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      }
+      },
     );
 
-    localStorage.removeItem('token');
+    localStorage.removeItem("token");
     return true;
-  }
-  catch (error) {
-    console.log('logout failed', error)
-    localStorage.removeItem('token');
+  } catch (error) {
+    console.log("logout failed", error);
+    localStorage.removeItem("token");
     throw error;
   }
-  
-
-}
-
-
+};
 
 export async function getPosts() {
   const token = localStorage.getItem("token");
@@ -59,11 +54,42 @@ export async function getPosts() {
         Authorization: `Bearer ${token}`,
       },
     });
-    return response; 
+    return response;
   } catch (error) {
-    throw error; 
+    throw error;
   }
 }
 
+export async function getPost(id) {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await api.get(`/post/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function postPosts(html, heading) {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await api.post(
+      "/post",
+      { heading: `${heading}`, content: `${html}` },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response;
+  } catch (err) {
+    throw err;
+  }
+}
 
 export default api;

@@ -12,7 +12,22 @@ class PostController extends Controller
         $user = auth()->user();
         $posts = $user->posts()->orderBy("created_at", "desc")->get();
         return response()->json([
-            'posts' => $posts,
+            "posts" => $posts,
+        ]);
+    }
+    public function show($id)
+    {
+        $post = Posts::where("id", $id)->first();
+        if (!$post) {
+            return response()->json(
+                [
+                    "massage" => "post not found",
+                ],
+                404
+            );
+        }
+        return response()->json([
+            "post" => $post,
         ]);
     }
 
@@ -30,10 +45,12 @@ class PostController extends Controller
             "likes" => 0,
         ]);
 
-        return response()->json([
-            'massage' => 'post created sucessful',
-            'post' => $posts,
-        ], 201);
-
+        return response()->json(
+            [
+                "massage" => "post created sucessful",
+                "post" => $posts,
+            ],
+            201
+        );
     }
 }
