@@ -16,7 +16,7 @@ export const registerUser = (name, email, password) => {
 
 export const getUser = () => {
   const token = localStorage.getItem("token");
-  return api.get("/me", {
+  return api.get("/user", {
     headers: {
       Authorization: `Bearer ${token}`,
     },

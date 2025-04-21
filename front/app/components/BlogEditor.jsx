@@ -83,14 +83,7 @@ const extensions = [
 ];
 
 const content = `
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
-<p></p>
+
 `;
 
 const BlogEditor = () => {

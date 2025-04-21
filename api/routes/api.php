@@ -11,10 +11,15 @@ Route::prefix("v1")->group(function () {
 
     Route::post("/login", [AuthController::class, "login"]);
 
-    Route::get("/me", [ProfileController::class, "me"])->middleware(
+    Route::get("/users/", [ProfileController::class, "index"])->middleware(
         "auth:sanctum"
     );
-    Route::put("/me", [ProfileController::class, "edit"])->middleware(
+
+    Route::get("/user", [ProfileController::class, "me"])->middleware(
+        "auth:sanctum"
+    );
+
+    Route::put("/user", [ProfileController::class, "edit"])->middleware(
         "auth:sanctum"
     );
 
