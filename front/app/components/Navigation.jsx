@@ -19,15 +19,13 @@ export default function Header() {
   const logState = useContext(AuthContext);
   const router = useRouter();
 
-  async function handleLogOut(){
-    
+  async function handleLogOut() {
     const response = await logOutUser();
 
-    if(response){
+    if (response) {
       logState.setIsLogIn(false);
-      router.push('/');
+      router.push("/");
     }
-
   }
 
   return (
@@ -58,18 +56,23 @@ export default function Header() {
               <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base py-2 px-3 mr-2 mt-2 shadow-xl">
                 <Link href="/profile" className="">
                   <MenubarItem className="flex space-x-2  w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
-                  <CircleUserRound /> <span>Profile</span>
+                    <CircleUserRound /> <span>Profile</span>
                   </MenubarItem>
                 </Link>
                 <MenubarSeparator className="h-2"></MenubarSeparator>
-                <Link href="/blog" className="">
-                  <MenubarItem className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
-                  <NotebookPen /><span>Blog</span>
+                <Link href="/blog/new" className="">
+                  <MenubarItem className="flex justify-between space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
+                    <NotebookPen />
+                    New Post
                   </MenubarItem>
                 </Link>
                 <MenubarSeparator className="h-2"></MenubarSeparator>
-                <MenubarItem className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px] text-[var(--fiolet)]" onClick={handleLogOut}>
-                <LogOut color="#B4499D"/><span>Log Out</span>
+                <MenubarItem
+                  className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px] text-[var(--fiolet)]"
+                  onClick={handleLogOut}
+                >
+                  <LogOut color="#B4499D" />
+                  <span>Log Out</span>
                 </MenubarItem>
               </MenubarContent>
             </MenubarMenu>

@@ -22,6 +22,9 @@ export const getUser = () => {
     },
   });
 };
+export async function getUserById(id) {
+  return api.get(`/user/${id}`);
+}
 
 export const logOutUser = async () => {
   const token = localStorage.getItem("token");
@@ -46,7 +49,7 @@ export const logOutUser = async () => {
   }
 };
 
-export async function getPosts() {
+export async function getUserPosts() {
   const token = localStorage.getItem("token");
   try {
     const response = await api.get("/posts", {
@@ -89,6 +92,64 @@ export async function postPosts(html, heading) {
     return response;
   } catch (err) {
     throw err;
+  }
+}
+
+export async function likePost(postId) {
+  const token = localStorage.getItem("token");
+  try {
+    const response = await api.post(
+      `/post/${postId}/like`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    if (error.response.status === 404) {
+      throw new Error("Post not found");
+    }
+    throw error;
+  }
+}
+
+export async function unlikePost(postId){
+  const token = localStorage.getItem("token");
+  try {
+    const response = await api.post(
+      `/post/${postId}/unlike`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return response;
+  } catch (error) {
+    if (error.response.status === 404) {
+      throw new Error("Post not found");
+    }
+    throw error;
+  }
+}
+
+
+export async function getPostLikes(postId) {
+  try{
+    const response = api.get(
+      `/post/${postId}/like`
+    );
+    return response;
+  }catch(err){
+    if(err.response.status === 403){
+      throw new Error("Post not found");
+    }
+    throw err;
+  
   }
 }
 

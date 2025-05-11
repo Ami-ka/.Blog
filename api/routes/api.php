@@ -11,10 +11,9 @@ Route::prefix("v1")->group(function () {
 
     Route::post("/login", [AuthController::class, "login"]);
 
-    Route::get("/users/", [ProfileController::class, "index"])->middleware(
-        "auth:sanctum"
-    );
+    Route::get("/users/", [ProfileController::class, "index"]);
 
+    Route::get("/user/{id}", [ProfileController::class, "user_by_id"]);
     Route::get("/user", [ProfileController::class, "me"])->middleware(
         "auth:sanctum"
     );
@@ -30,9 +29,19 @@ Route::prefix("v1")->group(function () {
     Route::post("/post", [PostController::class, "store"])->middleware(
         "auth:sanctum"
     );
+    Route::post("/post/{id}/like", [PostController::class, "like"])->middleware(
+        "auth:sanctum"
+    );
+    Route::get("/post/{id}/like", [PostController::class, "likeIndex"]);
+    Route::post("/post/{id}/unlike", [
+        PostController::class,
+        "unlike"
+    ])->middleware("auth:sanctum");
     Route::get("/post/{id}", [PostController::class, "show"]);
+
 
     Route::get("/posts", [PostController::class, "index"])->middleware(
         "auth:sanctum"
     );
+    Route::get("/", [PostController::class, "all"]);
 });

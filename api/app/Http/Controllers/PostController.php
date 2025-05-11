@@ -2,15 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Like;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index()
+    public function all()
     {
+        $posts = Posts::all();
+        return response()->json([
+            "posts" => $posts,
+        ]);
+    }
+    public function index(Request $request)
+    {
+        if ($request->user()) {
+            $user = $request->user();
+        }
         $user = auth()->user();
         $posts = $user->posts()->orderBy("created_at", "desc")->get();
+
+        foreach ($posts as $post) {
+            $post->is_liked = $post->like()->where('user_id', $user->id)->exists();
+        }
+
         return response()->json([
             "posts" => $posts,
         ]);
@@ -52,5 +68,58 @@ class PostController extends Controller
             ],
             201
         );
+    }
+
+
+    public function likeIndex($id){
+        $likeCount = Like::where("post_id", $id)->count();
+        
+        return response()->json([
+            "likeCount" => $likeCount,
+        ]);
+
+    }
+    public function like($id, Request $request)
+    {
+        $userId = auth()->id();
+        $alreadyLiked = Like::where("user_id", $userId)->where("post_id", $id)->exists();
+
+        if($alreadyLiked){
+            return response()->json(['message'=>'Already Liked'], 409);
+        }
+
+        Like::create([
+            "user_id" => $userId,
+            "post_id" => $id, 
+        ]);
+
+        
+        return response([
+            'message' => 'like sucessfully',
+        ], 201);
+    }
+
+    public function unlike($id)
+    {
+        $userId = auth()->id();
+        
+        $post = Like::where("user_id", $userId);
+        if(!$post){
+            return response()->json([
+                "message" => "post not found",
+            ], 404);
+        }
+
+        $like = Like::where("user_id", $userId)->where("post_id", $id)->first();
+        if(!$like){
+            return response()->json([
+                "message" => "already unliked",
+            ], 409 ); 
+        }
+       
+        $like->delete();
+        return response()->json([
+            "message" => "unliked sucessfuly"
+        ]);
     }
 }

@@ -22,7 +22,7 @@ const MenuBar = () => {
     const html = editor.getHTML();
     const response = await postPosts(html, heading);
     if (response.status == 201) {
-      router.push("/blog");
+      router.push("/profile");
     } else {
       console.log(response.status);
       console.log("post submit error");
@@ -83,7 +83,18 @@ const extensions = [
 ];
 
 const content = `
-
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
 `;
 
 const BlogEditor = () => {
