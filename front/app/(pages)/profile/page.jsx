@@ -4,7 +4,7 @@ import { getUser, getUserPosts } from "@/services/api"; // Added missing import 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Plus } from "lucide-react"; // Added missing import for Plus icon
+import { NotebookPen, Plus } from "lucide-react"; // Added missing import for Plus icon
 import PostCard from "../../components/PostCard"; // Added missing import for PostCard
 import Button from "@/app/components/Button";
 
@@ -26,8 +26,8 @@ export default function Profile() {
       }
       try {
         const response = await getUser();
-        console.log("response:", response.data);
-        setUserData(response.data);
+        console.log("response:", response);
+        setUserData(response.data.userData);
       } catch (err) {
         console.log("problem with getting user ", err);
         router.push("/");
@@ -41,7 +41,7 @@ export default function Profile() {
       try {
         const response = await getUserPosts();
         const user = await getUser();
-        setBlogname(user.data.blogname);
+        setBlogname(user.data.userData.blogname);
         
         console.log(response);
         setPosts(response.data.posts);
@@ -89,13 +89,13 @@ export default function Profile() {
             <div className="text-center">
               <div className="text-3xl">{userData.name}</div>
               <div className="text-sm ">
-                @{userData.name} <>·</> _ posts{" "}
+                @{userData.name} <>·</> {userData.postsNumber} posts{" "}
                 {/*TO-do save number of posts */}
               </div>
             </div>
             <div className="flex justify-between items-end">
               <h1 className="font-bold text-xl">{blogname}</h1>
-              <Button onClick={handleCreate} className="mt-2">
+              <Button onClick={handleCreate} className="mt-2 px-3">
                 <div className="flex text-base items-center justify-between gap-1 ">
                   New post <Plus size={20} strokeWidth={2.75} />
                 </div>
@@ -103,7 +103,7 @@ export default function Profile() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-10 px-5">
               {posts.map((post, index) => (
-                <PostCard key={index} {...post} />
+                <PostCard key={index} {...post} ><Button className=" px-2"><NotebookPen></NotebookPen></Button></PostCard>
               ))}
             </div>
           </div>

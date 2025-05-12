@@ -3,25 +3,38 @@
 import Button from "@/app/components/Button";
 import Card from "@/app/components/Card";
 import PostCard from "@/app/components/PostCard";
+import { getUserById, getUserPosts, getUserPostsById } from "@/services/api";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function page() {
-  const [userData, setUserData] = useState(null);
+  const router = useRouter();
+  const [userData, setUserData] = useState("user");
   const [blogname, setBlogname] = useState(null);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const params = useParams();
+  const {id} = params;
+  
   
   
   useEffect(()=>{
     async function fetchInfo() {
       try{
-        const username = await getUserById(user_id);
+        const user = await getUserById(id);
+        setUserData(user.data);
+        const posts = await getUserPostsById(id);// to-do fix getting the posts 
+        
+        setPosts(posts.data.posts)
+      }catch(e){
+        throw e;
       }
     }
+    console.log(params);
+    fetchInfo();
   },[])
 
   return (
@@ -36,19 +49,14 @@ export default function page() {
               alt="user.png"
             />
             <div className="text-center">
-              <div className="text-3xl">{userData.name}</div>
+              <div className="text-3xl">{userData.userName}</div>
               <div className="text-sm ">
-                @{userData.name} <>·</> _ posts{" "}
+                @{userData.name} <>·</> {userData.postsNumber} posts{" "}
                 {/*TO-do save number of posts */}
               </div>
             </div>
             <div className="flex justify-between items-end">
               <h1 className="font-bold text-xl">{blogname}</h1>
-              <Button onClick={handleCreate} className="mt-2">
-                <div className="flex text-base items-center justify-between gap-1 ">
-                  New post <Plus size={20} strokeWidth={2.75} />
-                </div>
-              </Button>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-10 px-5">
               {posts.map((post, index) => (

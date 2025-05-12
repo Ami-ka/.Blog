@@ -14,13 +14,18 @@ export const registerUser = (name, email, password) => {
   return api.post("/register", { name, email, password });
 };
 
-export const getUser = () => {
+export const getUser = async () => {
   const token = localStorage.getItem("token");
-  return api.get("/user", {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  try{
+    const response = await api.get("/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  }catch(err){
+    throw err;
+  }
 };
 export async function getUserById(id) {
   return api.get(`/user/${id}`);
@@ -59,6 +64,15 @@ export async function getUserPosts() {
     });
     return response;
   } catch (error) {
+    throw error;
+  }
+}
+
+export async function getUserPostsById(id){
+  try{
+    const response = await api.get(`/user/${id}/posts`);
+    return response;
+  }catch(error){
     throw error;
   }
 }
@@ -151,6 +165,20 @@ export async function getPostLikes(postId) {
     throw err;
   
   }
+}
+
+export async function getPostsByIndex(pageNum, userId = -1){
+    try{
+      const response = api.post(
+        `/posts/${pageNum}`,{
+          id: `${userId}`,
+        }
+      );
+      return response;
+
+    }catch (error){
+      throw error;
+    }
 }
 
 export default api;

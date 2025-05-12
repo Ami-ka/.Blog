@@ -8,9 +8,40 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function pIndex($index, Request $request)
+    {   
+        $posts = Posts::paginate(15, ["*"], $index);//to-do test it 
+        if($request->id != -1){
+            foreach ($posts as $post) {
+                $post->is_liked = $post->like()->where('user_id', $request->id)->exists();
+            }
+        }
+
+        return response()->json([
+            "page" => $posts,
+        ]);
+
+    }
+
     public function all()
     {
         $posts = Posts::all();
+        return response()->json([
+            "posts" => $posts,
+        ]);
+    }
+
+    public function post_by_user_id($id, Request $request){
+        $posts = Posts::where("user_id", $id)->get();
+        if(!$posts){
+            return response()->json([
+                "message" => "post not found",
+            ], 404);
+        }
+        foreach ($posts as $post) {
+            $post->is_liked = $post->like()->where('user_id', $request->id)->exists();
+        }
         return response()->json([
             "posts" => $posts,
         ]);
