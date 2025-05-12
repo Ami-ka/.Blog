@@ -23,10 +23,29 @@ body {
     font-family: var(--font-lunasima);
 }
 
-.ProseMirror {
+/* .ProseMirror {
     position: static !important;
     background-color: var(--card);
     margin-top: 1rem;
     border-radius: 8px;
     padding: 1rem;
+} */
+
+
+.content-wrapper{
+    background-color: var(--background);
+}
+
+div.tiptap-toolbal{
+    background-color: var(--background);
+}
+
+div.tiptap.ProseMirror{
+    background-color: whitesmoke;
+    position: static !important;
+    margin-top: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
+
+    color: black;
 }

@@ -29,7 +29,7 @@ export default function Header() {
   }
 
   return (
-    <header className="bg-[var(--background)] sticky top-0 flex justify-between items-center px-[16px] border-1 border-[#302F3F] py-[12px] ">
+    <header className="bg-[var(--background)]  top-0 flex justify-between items-center px-[16px] border-1 border-[#302F3F] py-[12px] ">
       <Link
         href="/"
         className="bg-gradient-to-r from-[#F07E7F] to-[#B4499D] bg-clip-text text-transparent font-bold text-xl"
@@ -49,11 +49,11 @@ export default function Header() {
           <Menubar>
             <MenubarMenu>
               <MenubarTrigger>
-                <div className="rounded-[8px] m-0 p-0.5 hover:bg-gradient-to-r hover:from-[var(--fiolet)] hover:to-[var(--orange)] transition-colors duration-300">
+                <div className="rounded-[8px] m-0 p-0.5 hover:bg-gradient-to-r hover:from-[var(--fiolet)] hover:to-[var(--orange)] transition-colors duration-300 ">
                   <Menu size={32} strokeWidth={2.5} />
                 </div>
               </MenubarTrigger>
-              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base py-2 px-3 mr-2 mt-2 shadow-xl">
+              <MenubarContent className="bg-[#302F3F] rounded-[8px] text-center  py-4 bg-[#302F3F] rounded-[8px] text-center text-base py-2 px-3 mr-2 mt-2 shadow-xl z-[100]">
                 <Link href="/profile" className="">
                   <MenubarItem className="flex space-x-2  w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px]">
                     <CircleUserRound /> <span>Profile</span>
