@@ -32,4 +32,24 @@ class ProfileController extends Controller
             "postsNumber" => $postsNumber,
         ]);
     }
+
+    public function edit(Request $request){
+        $user = $request->user();
+
+        $request->validate(
+            [
+                "name" => "required|string|max:255",
+                "blogName" => "string|max:255",
+            ]
+        );
+        $user->update([
+            "name" => $request->name,
+            "blogname" => $request->blogName,
+        ]);
+
+        return response()->json([
+            "user" => $user,
+        ]);
+    }
+
 }

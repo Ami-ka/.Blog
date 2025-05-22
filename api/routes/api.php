@@ -19,18 +19,19 @@ Route::prefix("v1")->group(function () {
     Route::get("/user", [ProfileController::class, "me"])->middleware(
         "auth:sanctum"
     );
-
+    
     Route::put("/user", [ProfileController::class, "edit"])->middleware(
         "auth:sanctum"
     );
-
+    
     Route::post("/logout", [AuthController::class, "logout"])->middleware(
         "auth:sanctum"
     );
-
+    
     Route::post("/post", [PostController::class, "store"])->middleware(
         "auth:sanctum"
     );
+    Route::post("/post/{id}/edit", [PostController::class, "update"])->middleware("auth:sanctum");
     Route::post("/post/{id}/like", [PostController::class, "like"])->middleware(
         "auth:sanctum"
     );

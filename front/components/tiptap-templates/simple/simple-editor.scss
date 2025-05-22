@@ -4,6 +4,8 @@ body {
   --tt-toolbar-height: 44px;
   --tt-theme-text: var(--tt-gray-light-900);
 
+  --font-lunasima: Lunasima, sans-serif;
+
   // .dark & {
   //   --tt-theme-text: var(--tt-gray-dark-900);
   // }
@@ -19,7 +21,9 @@ body {
 
 
 .tiptap.ProseMirror {
-  font-family: "DM Sans", sans-serif;
+  font-family: var(--font-lunasima);
+  background-color: #302F3F !important;
+  
 
 }
 
@@ -49,11 +53,15 @@ body {
 .simple-editor-content {
   max-width: 640px;
   width: 100%;
-  margin: 0 auto;
+  margin-top: 6vh;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 0;
 }
 
 .simple-editor-content .tiptap.ProseMirror {
   padding: 3rem 3rem;
+  min-height: 700px;
 }
 
 @media screen and (max-width: 480px) {

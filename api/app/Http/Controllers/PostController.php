@@ -11,7 +11,7 @@ class PostController extends Controller
 
     public function pIndex($index, Request $request)
     {   
-        $posts = Posts::paginate(15, ["*"], $index);//to-do test it 
+        $posts = Posts::orderBy("created_at", "desc")->paginate(15, ["*"], $index,);//to-do test it 
         if($request->id != -1){
             foreach ($posts as $post) {
                 $post->is_liked = $post->like()->where('user_id', $request->id)->exists();
@@ -33,7 +33,7 @@ class PostController extends Controller
     }
 
     public function post_by_user_id($id, Request $request){
-        $posts = Posts::where("user_id", $id)->get();
+        $posts = Posts::where("user_id", $id)->orderBy("created_at", "desc")->get();
         if(!$posts){
             return response()->json([
                 "message" => "post not found",
@@ -46,6 +46,34 @@ class PostController extends Controller
             "posts" => $posts,
         ]);
     }
+
+    public function update($id, Request $request){
+        $user = auth()->user();
+
+        $post = Posts::where("id", $id)->first();
+
+        if($user->id != $post->user_id){
+            return response()->json([
+                "message" => "Unauthtorized",
+            ], 403);
+        }
+
+        $validated= $request->validate([
+            'heading' => 'required|string|max:255',
+            'content' => 'required|string'
+        ]);
+
+       
+
+        $post->update($validated);
+        
+        return response()->json([
+            "message" => "updated sucessfully",
+            "post" => $post,
+        ]);
+
+    }
+
     public function index(Request $request)
     {
         if ($request->user()) {
@@ -80,6 +108,8 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
+        // echo $request;
+
         $validated = $request->validate([
             "heading" => "required|string|max:255",
             "content" => "required|string",

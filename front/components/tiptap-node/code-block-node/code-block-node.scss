@@ -4,7 +4,7 @@
   --tt-inline-code-border-color: var(--tt-gray-light-a-200);
   --tt-codeblock-bg: var(--tt-gray-light-a-50);
   --tt-codeblock-text: var(--tt-gray-light-a-800);
-  --tt-codeblock-border: var(--tt-gray-light-a-200);
+  --tt-codeblock-border: var(--tt-gray-dark-a-100);
 
   .dark & {
     --tt-inline-code-bg-color: var(--tt-gray-dark-a-100);
@@ -34,9 +34,9 @@
 
   // Code blocks
   pre {
-    background-color: var(--tt-codeblock-bg);
+    background-color: var(--card);
     color: var(--tt-codeblock-text);
-    border: 1px solid var(--tt-codeblock-border);
+    border: 1.5px solid var(--tt-codeblock-border);
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     padding: 1em;
@@ -48,7 +48,7 @@
       border: none;
       border-radius: 0;
       -webkit-text-fill-color: inherit;
-      color: inherit;
+      color: white;
     }
   }
 }

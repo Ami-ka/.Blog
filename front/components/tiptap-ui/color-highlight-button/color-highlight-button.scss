@@ -40,7 +40,7 @@
     &[data-active-state="on"] {
       .tiptap-button-highlight {
         &::after {
-          // Andere Eigenschaft für .dark Kontext
+          
           filter: brightness(180%);
         }
       }

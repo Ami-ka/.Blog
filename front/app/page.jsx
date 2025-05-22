@@ -36,8 +36,8 @@ export default function Home() {
   return (
     <div className="flex justify-center items-center xl:max-w-[1280px] xl:m-auto mt-6 xl:p-20  ">
       <Card className="">
-        <div className="min-h-[90vh] xl:min-w-90">
-          <div className="flex flex-col  items-center">
+        <div className="min-h-[90vh] xl:min-w-220">
+          <div className="grid columns-1 items-center">
             <div className="grid grid-cols-1 gap-6 mt-10 px-5">
               {posts.map((post, index) => (
                 <PostCard key={index} {...post} />

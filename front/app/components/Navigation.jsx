@@ -11,7 +11,14 @@ import {
   MenubarSeparator,
   MenubarTrigger,
 } from "@radix-ui/react-menubar";
-import { CircleUserRound, LogOut, Menu, NotebookPen } from "lucide-react";
+import {
+  CircleUserRound,
+  LogOut,
+  Menu,
+  NotebookPen,
+  Search,
+  SortAsc,
+} from "lucide-react";
 import { logOutUser } from "@/services/api";
 import { useRouter } from "next/navigation";
 
@@ -36,6 +43,16 @@ export default function Header() {
       >
         .Blog
       </Link>
+
+      <div className="flex justify-between shadow  border rounded-full  py-1 px-1.5 text-white border-gray-600  leading-tight focus:outline-none focus:shadow-outline">
+
+
+
+        <input className="appearance-none border-0 rounded-full focus:outline-none focus:shadow-outline "></input>
+        <div className="rounded-full bg-[var(--card)] flex justify-center items-center h-9 w-9 transition-colors hover:shadow-2xl hover:bg-[#504f68]">
+          <Search></Search>
+        </div>
+      </div>
       <div>
         {!logState.isLogIn && (
           <Link
@@ -68,7 +85,7 @@ export default function Header() {
                 </Link>
                 <MenubarSeparator className="h-2"></MenubarSeparator>
                 <MenubarItem
-                  className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px] text-[var(--fiolet)]"
+                  className="flex space-x-2 w-30 hover:bg-[#403E55] py-2 px-2.5 rounded-[8px] text-[var(--fiolet)] cursor-pointer"
                   onClick={handleLogOut}
                 >
                   <LogOut color="#B4499D" />

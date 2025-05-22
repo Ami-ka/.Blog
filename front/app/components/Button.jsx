@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
 
-function Button({ children, className = "", onClick, disabled = false }) {
+function Button({ children, className = "", onClick, disabled = false, type, onSubmit }) {
   className =
     className +
-    " bg-[#B4499D]  hover:bg-[#F07E7F] transition-colors duration-300 text-white font-bold py-2  rounded-full focus:outline-none focus:shadow-outline";
+    "before:bg-[#B4499D]! px-2  hover:bg-[var(--fiolet)]! transition-colors! text-white font-bold py-2!  rounded-full focus:outline-none! focus:shadow-outline!";
   return (
-    <button className={className} onClick={onClick} disabled={disabled}>
+    <button className={className} onClick={onClick} disabled={disabled} type={type}>
       {children}
     </button>
   );

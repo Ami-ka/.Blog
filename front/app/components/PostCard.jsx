@@ -5,16 +5,12 @@ import {
   unlikePost,
 } from "@/services/api";
 import alertAuthorizePlease from "@/services/utility";
+import { extractTextFromTiptapJSON } from "@/utils/formatingjson";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-function stripHtmlTags(html) {
-  const div = document.createElement("div");
-  div.innerHTML = html;
-  return div.textContent || div.innerText || "";
-}
 
 function formatLikeCount(LikeCount) {
   if (LikeCount >= 1000000) {
@@ -69,7 +65,7 @@ export default function PostCard({
   children,
 }) {
   const post_id = id;
-  const plainText = stripHtmlTags(content);
+  const plainText = extractTextFromTiptapJSON(content);
   const truncatedContent =
     plainText.length > 200 ? plainText.slice(0, 200) + "..." : plainText;
   const [isLiked, setIsLiked] = useState(is_liked);
@@ -127,13 +123,13 @@ export default function PostCard({
         </Link>
         <span>{convertTime(created_at)}</span>
       </div>
-      <Link href={`/post/${post_id}`}>
-        <h2 className="text-lg font-semibold">{heading}</h2>
+      <Link href={`blog/post/${post_id}`}>
+        <h2 className="text-lg font-semibold w-fit">{heading}</h2>
       </Link>
       <p className="text-gray-400 text-sm line-clamp-3">{truncatedContent}</p>
       <div className="flex items-center text-center justify-between text-sm gap-4">
-        <Link className="w-full" href={`/post/${post_id}`}>
-          <button className="w-full bg-gradient-to-r from-[#F07E7F] to-[#B4499D] hover:bg-gradient-to-l transition-colors duration-300 p-2 rounded-2xl cursor-pointer ">
+        <Link className="w-full" href={`blog/post/${post_id}`}>
+          <button className="w-full bg-[var(--fiolet)] hover:bg-gradient-to-r hover:to-[var(--orange)]  transition-transform duration-300 p-2 rounded-2xl cursor-pointer ">
             Read more
           </button>
         </Link>

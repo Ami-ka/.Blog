@@ -4,9 +4,10 @@ import { getUser, getUserPosts } from "@/services/api"; // Added missing import 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { NotebookPen, Plus } from "lucide-react"; // Added missing import for Plus icon
+import { NotebookPen, Pen, Plus } from "lucide-react"; // Added missing import for Plus icon
 import PostCard from "../../components/PostCard"; // Added missing import for PostCard
 import Button from "@/app/components/Button";
+import Link from "next/link";
 
 export default function Profile() {
   
@@ -76,16 +77,19 @@ export default function Profile() {
   }
 
   return (
-    <div className="flex justify-center items-center xl:max-w-[1280px] xl:m-auto mt-6 xl:p-20  ">
-      <Card className="">
-        <div className="min-h-[90vh] xl:min-w-90">
+    <div className="flex justify-center items-center  mt-6 xl:p-20  ">
+      <Card className="xl:max-w-[1280px] xl:m-auto min-h-[90vh] xl:min-w-220 min-w-80">
+        <div className="" >
           <div className="flex flex-col  items-center">
+            <div className="relative">
             <Image
               src="/icons/user.svg"
               width={100}
               height={100}
               alt="user.png"
             />
+            <Link href="/profile/edit" className="absolute bottom-0 -left-0 bg-[var(--fiolet)] p-2 rounded-full shadow-2xl hover:bg-[var(--orange)] "><Pen /></Link>
+            </div>
             <div className="text-center">
               <div className="text-3xl">{userData.name}</div>
               <div className="text-sm ">
@@ -93,17 +97,17 @@ export default function Profile() {
                 {/*TO-do save number of posts */}
               </div>
             </div>
-            <div className="flex justify-between items-end">
-              <h1 className="font-bold text-xl">{blogname}</h1>
+            <div className="flex justify-between items-center  flex-col">
+              <h1 className="font-bold text-3xl text-center">{blogname}</h1>
               <Button onClick={handleCreate} className="mt-2 px-3">
-                <div className="flex text-base items-center justify-between gap-1 ">
+                <div className="flex text-base items-center justify-between gap-1 " >
                   New post <Plus size={20} strokeWidth={2.75} />
                 </div>
               </Button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-10 px-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-10 px-5 xl:min-w-220">
               {posts.map((post, index) => (
-                <PostCard key={index} {...post} ><Button className=" px-2"><NotebookPen></NotebookPen></Button></PostCard>
+                <PostCard key={index} {...post} ><Link href={`blog/post/${post.id}/edit`}><Button className=" px-2"><NotebookPen></NotebookPen></Button></Link></PostCard>
               ))}
             </div>
           </div>

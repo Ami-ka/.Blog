@@ -1,7 +1,7 @@
 .tiptap-popover {
-  --tt-popover-bg-color: var(--white);
+  --tt-popover-bg-color: var(--card);
   --tt-popover-border-color: var(--tt-gray-light-a-100);
-  --tt-popover-text-color: var(--tt-gray-light-a-600);
+  --tt-popover-text-color: white;
 
   .dark & {
     --tt-popover-border-color: var(--tt-gray-dark-a-50);

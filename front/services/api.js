@@ -1,5 +1,6 @@
 import { Content } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
+
 import { useRouter } from "next/navigation";
 
 const api = axios.create({
@@ -30,6 +31,20 @@ export const getUser = async () => {
 export async function getUserById(id) {
   return api.get(`/user/${id}`);
 }
+
+export async function setUserData(name, blogName){
+  const token = localStorage.getItem('token');
+  try{
+    const response = await api.put('/user', {name: `${name}`, blogName: `${blogName}`},{
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response;
+  }catch(err){
+    throw err;
+  }
+};
 
 export const logOutUser = async () => {
   const token = localStorage.getItem("token");
@@ -91,12 +106,12 @@ export async function getPost(id) {
   }
 }
 
-export async function postPosts(html, heading) {
+export async function postPosts(json, heading) {
   const token = localStorage.getItem("token");
   try {
     const response = await api.post(
       "/post",
-      { heading: `${heading}`, content: `${html}` },
+      { heading: `${heading}`, content: `${json}` },
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -151,6 +166,23 @@ export async function unlikePost(postId){
   }
 }
 
+export async function updatePost(postId, heading, content){
+  const token = localStorage.getItem('token');
+  try{
+    console.log(heading, content);
+    const response = await api.post(`/post/${postId}/edit`, 
+      {heading: `${heading}`, content: `${content}`}, {
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+    return response;
+  }
+  catch(err){
+    throw err;
+  }
+}
 
 export async function getPostLikes(postId) {
   try{

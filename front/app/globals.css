@@ -1,8 +1,11 @@
 @import "tailwindcss";
+@import "../styles/_keyframe-animations.scss";
+@import "../styles/_variables.scss";
 
 :root {
     --background: #21202a;
     --foreground: #ffffff;
+    
     --font-lunasima: Lunasima, sans-serif;
     --fiolet: #b4499d;
     --orange: #f07e7f;
@@ -16,11 +19,13 @@
     }
 }
 
+
 body {
+    caret-color:#f07e7f !important;
     background: var(--background);
     color: var(--foreground);
     font-family: Arial, Helvetica, sans-serif;
-    font-family: var(--font-lunasima);
+    font-family: var(--font-lunasima) !important;
 }
 
 /* .ProseMirror {
@@ -34,6 +39,7 @@ body {
 
 .content-wrapper{
     background-color: var(--background);
+    
 }
 
 div.tiptap-toolbal{
@@ -41,11 +47,11 @@ div.tiptap-toolbal{
 }
 
 div.tiptap.ProseMirror{
-    background-color: whitesmoke;
+    
     position: static !important;
     margin-top: 1rem;
     border-radius: 8px;
     padding: 1rem;
-
-    color: black;
+    
+    color: white;
 }

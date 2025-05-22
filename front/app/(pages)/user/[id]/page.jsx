@@ -40,8 +40,8 @@ export default function page() {
   return (
     <div className="flex justify-center items-center xl:max-w-[1280px] xl:m-auto mt-6 xl:p-20  ">
       <Card className="">
-        <div className="min-h-[90vh] xl:min-w-90">
-          <div className="flex flex-col  items-center">
+        <div className="min-h-[90vh] xl:min-w-220">
+          <div className="flex flex-col  items-center ">
             <Image
               src="/icons/user.svg"
               width={100}
@@ -51,14 +51,14 @@ export default function page() {
             <div className="text-center">
               <div className="text-3xl">{userData.userName}</div>
               <div className="text-sm ">
-                @{userData.name} <>·</> {userData.postsNumber} posts{" "}
-                {/*TO-do save number of posts */}
+                @{userData.userName} <>·</> {userData.postsNumber} posts{" "}
+                
               </div>
             </div>
             <div className="flex justify-between items-end">
               <h1 className="font-bold text-xl">{blogname}</h1>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-10 px-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-10 px-5 xl:min-w-220">
               {posts.map((post, index) => (
                 <PostCard key={index} {...post} />
               ))}
