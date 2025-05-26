@@ -199,9 +199,13 @@ export async function getPostLikes(postId) {
   }
 }
 
-export async function getPostsByIndex(pageNum, userId = -1){
+export async function getPostsByIndex(pageNum, userId = -1,url){
+  if(url){
+    const response = await axios.post(url, {id:`${userId}`})
+    return response;
+  }
     try{
-      const response = api.post(
+      const response = await api.post(
         `/posts/${pageNum}`,{
           id: `${userId}`,
         }

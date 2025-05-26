@@ -3,7 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("v1")->group(function () {
@@ -12,7 +12,7 @@ Route::prefix("v1")->group(function () {
 
     Route::post("/login", [AuthController::class, "login"]);
 
-    Route::get("/users/", [ProfileController::class, "index"]);
+    Route::get("/users", [ProfileController::class, "index"]);
 
     Route::get("/user/{id}", [ProfileController::class, "user_by_id"]);
     Route::get("/user/{id}/posts", [PostController::class, "post_by_user_id"]);
