@@ -47,4 +47,6 @@ Route::prefix("v1")->group(function () {
         "auth:sanctum"
     );
     Route::get("/", [PostController::class, "all"]);
+
+    Route::get("/posts/search/{searchValue}", [PostController::class, "search"]);
 });

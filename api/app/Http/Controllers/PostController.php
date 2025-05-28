@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Like;
 use App\Models\Posts;
-use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -256,4 +256,71 @@ class PostController extends Controller
             "message" => "unliked sucessfuly"
         ]);
     }
+
+    public function search($searchValue, Request $request) {
+    if (!$searchValue) {
+        return response()->json(["message" => "empty request"], 400);
+    }
+    
+    // Создаем базовый запрос
+    $query = Posts::whereLike("heading", '%' . $searchValue . '%')
+        ->with('user') // загружаем данные пользователя
+        ->withCount('like'); // подсчитываем лайки
+    
+    // Применяем сортировку если поле orderBy не пустое
+    if (!empty($request->orderBy)) {
+        switch ($request->orderBy) {
+            case 'likes':
+                $query->orderBy('like_count', 'desc');
+                break;
+            case 'date':
+                $query->orderBy("created_at", "desc");
+                break;
+        }
+    }
+    // Если orderBy пустое, то используем только whereLike без дополнительной сортировки
+    
+    $posts = $query->paginate(15);
+    
+    if ($posts->isEmpty()) {
+        return response()->json([
+            "posts" => [
+                "data" => [],
+                "next_page_url" => null,
+                "current_page" => 1,
+                "total" => 0
+            ]
+        ]);
+    }
+    
+    if ($request->id != -1) {
+        // Получаем ID постов для оптимизации запроса лайков
+        $postIds = $posts->pluck('id');
+        
+        // Получаем лайки пользователя для этих постов одним запросом
+        $userLikes = Like::where('user_id', $request->id)
+            ->whereIn('post_id', $postIds)
+            ->pluck('post_id')
+            ->toArray();
+        
+        foreach ($posts->items() as $post) {
+            // Проверяем, есть ли ID поста в массиве лайков пользователя
+            $post->is_liked = in_array($post->id, $userLikes);
+            // Количество лайков уже загружено через withCount
+            $post->likes_count = $post->like_count;
+            // Имя пользователя уже загружено через with('user')
+            $post->user_name = $post->user ? $post->user->name : 'Unknown User';
+        }
+    } else {
+        foreach ($posts->items() as $post) {
+            $post->is_liked = false;
+            $post->likes_count = $post->like_count;
+            $post->user_name = $post->user ? $post->user->name : 'Unknown User';
+        }
+    }
+    
+    return response()->json([
+        "posts" => $posts,
+    ]);
+}
 }

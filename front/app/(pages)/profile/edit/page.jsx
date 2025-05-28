@@ -76,12 +76,13 @@ function page() {
         </div>
         <div className="flex items-center justify-between">
           <button
-            className="bg-[#B4499D] hover:bg-gradient-to-r hover:from-[#B4499D] hover:to-[#F07E7F] transition-colors duration-300 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
-            type="submit"
-            disabled={isLoading}
-          >
-            {isLoading ? "Submit..." : "Submit"}
-          </button>
+              disabled={isLoading}
+              type="submit"
+              className="group relative px-6 py-2.5 bg-[#44435a] text-white font-medium text-sm rounded-xl border border-[#44435a] transition-all duration-300 hover:border-[#b4499d]/50 hover:bg-gradient-to-r hover:from-[#b4499d] hover:to-[#f07e7f] hover:shadow-[0_8px_25px_rgba(180,73,157,0.3)] hover:scale-105 active:scale-95 overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+              <span className="relative">{isLoading? "Submit...":"Submit"  }</span>
+            </button>
           
         </div>
       </form>

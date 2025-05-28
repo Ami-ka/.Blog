@@ -217,4 +217,30 @@ export async function getPostsByIndex(pageNum, userId = -1,url){
     }
 }
 
+
+export async function searchPosts(searchValue, userId, orderBy = "", url = null){
+  if(url){
+    const response = await axios.get(url, {
+      params: {
+        id: userId
+      }
+    });
+    return response;
+  }
+  
+  try{
+    const response = await api.get(
+      `/posts/search/${searchValue}`, {
+        params: {
+          id: userId,
+          orderBy: orderBy
+        }
+      }
+    );
+    return response;
+  } catch (error){
+    throw error;
+  }
+}
+
 export default api;

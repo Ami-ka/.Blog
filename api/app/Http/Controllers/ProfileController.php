@@ -30,6 +30,7 @@ class ProfileController extends Controller
         return response()->json([
             "userName" => $user->name,
             "postsNumber" => $postsNumber,
+            "blogName" => $user->blogname,
         ]);
     }
 
