@@ -14,11 +14,8 @@ import Typography from "@tiptap/extension-typography";
 import Superscript from "@tiptap/extension-superscript";
 import Subscript from "@tiptap/extension-subscript";
 import Selection from "@/components/tiptap-extension/selection-extension";
-import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node";
 import TrailingNode from "@/components/tiptap-extension/trailing-node-extension";
 import Link from "@tiptap/extension-link";
-import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
-import { Toolbar } from "@/components/tiptap-ui-primitive/toolbar";
 import { useMobile } from "@/hooks/use-mobile";
 import { useWindowSize } from "@/hooks/use-window-size";
 

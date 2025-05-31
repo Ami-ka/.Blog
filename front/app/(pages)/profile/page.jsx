@@ -1,12 +1,11 @@
 "use client";
-import Card from "@/app/components/Card";
+
 import { getUser, getUserPosts } from "@/services/api";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NotebookPen, Pen, Plus } from "lucide-react";
 import PostCard from "../../components/PostCard";
-import Button from "@/app/components/Button";
 import Link from "next/link";
 
 export default function Profile() {

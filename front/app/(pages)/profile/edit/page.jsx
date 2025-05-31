@@ -1,7 +1,6 @@
 'use client'
 import Card from '@/app/components/Card';
 import { getUser, setUserData } from '@/services/api';
-import { Link } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 

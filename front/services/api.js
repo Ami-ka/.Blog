@@ -1,7 +1,6 @@
-import { Content } from "@radix-ui/react-dropdown-menu";
 import axios from "axios";
 
-import { useRouter } from "next/navigation";
+
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_URL,

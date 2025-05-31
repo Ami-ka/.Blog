@@ -1,21 +1,18 @@
 'use client'
 
-import Button from "@/app/components/Button";
-import Card from "@/app/components/Card";
+
 import PostCard from "@/app/components/PostCard";
 import { getUserById, getUserPosts, getUserPostsById } from "@/services/api";
 import { Plus } from "lucide-react";
 import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 export default function page() {
-  const router = useRouter();
+  
   const [userData, setUserData] = useState("user");
-  const [blogname, setBlogname] = useState(null);
+  
   const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   
   const {id} = useParams();
   

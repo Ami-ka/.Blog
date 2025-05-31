@@ -3,11 +3,9 @@ import Card from "@/app/components/Card";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
-import axios from "axios";
 import AuthContext from "@/app/context/AuthContext";
 import { loginUser } from "@/services/api";
 import { sleep } from "@/utils/sleep";
-import NewButton from "@/app/components/newButton";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
