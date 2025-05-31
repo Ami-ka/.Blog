@@ -281,6 +281,8 @@ class PostController extends Controller
     // Если orderBy пустое, то используем только whereLike без дополнительной сортировки
     
     $posts = $query->paginate(15);
+
+
     
     if ($posts->isEmpty()) {
         return response()->json([
