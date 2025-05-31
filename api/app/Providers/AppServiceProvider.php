@@ -18,10 +18,15 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+    public function boot()
     {
-        if (config('app.env') === 'production') {
+        // Принудительно используем HTTPS для всех URL
         URL::forceScheme('https');
-    }
+        
+        // Дополнительно для Railway.app
+        if (str_contains(config('app.url', ''), 'railway.app') || 
+            str_contains(request()->getHost(), 'railway.app')) {
+            URL::forceScheme('https');
+        }
     }
 }
