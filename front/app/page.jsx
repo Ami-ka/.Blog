@@ -116,13 +116,17 @@ export default function Home() {
         }
 
         if (response2?.data?.page) {
-          setPosts(response2.data.page.data || []);
-          setNextPageUrl(response2.data.page.next_page_url || "");
-          setHasMore(!!response2.data.page.next_page_url);
-        } else {
-          setPosts([]);
-          setHasMore(false);
-        }
+        setPosts(response2.data.page.data || []);
+        const nextUrl = response2.data.page.next_page_url || "";
+        const httpsNextUrl = nextUrl.replace('http://', 'https://');
+        setNextPageUrl(httpsNextUrl);
+        setHasMore(!!response2.data.page.next_page_url);
+      } else {
+        setPosts([]);
+        setHasMore(false);
+      }
+      
+      console.log("ответ", response2);
 
         console.log("ответ", response2);
       } catch (error) {
