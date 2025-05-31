@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://blog-zeta-red-59.vercel.app/'],
+    'allowed_origins' => ['*'],
 
     'allowed_origins_patterns' => [],
 
