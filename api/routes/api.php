@@ -49,4 +49,9 @@ Route::prefix("v1")->group(function () {
     Route::get("/", [PostController::class, "all"]);
 
     Route::get("/posts/search/{searchValue}", [PostController::class, "search"]);
+
+
+    Route::get('/test', function () {
+    return response()->json(['message' => 'API working', 'time' => now()]);
+});
 });
