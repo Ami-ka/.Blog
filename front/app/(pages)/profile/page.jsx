@@ -1,11 +1,12 @@
 "use client";
-
+import Card from "@/app/components/Card";
 import { getUser, getUserPosts } from "@/services/api";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NotebookPen, Pen, Plus } from "lucide-react";
 import PostCard from "../../components/PostCard";
+import Button from "@/app/components/Button";
 import Link from "next/link";
 
 export default function Profile() {
@@ -128,7 +129,7 @@ export default function Profile() {
 
               {/* Информация о пользователе */}
               <div className="text-center space-y-3">
-                <h1 className="text-3xl xl:text-4xl font-bold text-white bg-gradient-to-r from-[#b4499d] to-[#f07e7f] bg-clip-text text-transparent">
+                <h1 className="text-3xl xl:text-4xl font-bold text-white bg-gradient-to-r from-[#b4499d] to-[#f07e7f] bg-clip-text ">
                   {userData.name}
                 </h1>
                 

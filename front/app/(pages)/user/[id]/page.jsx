@@ -65,7 +65,7 @@ export default function page() {
   
                 {/* Информация о пользователе */}
                 <div className="text-center space-y-3">
-                  <h1 className="text-3xl xl:text-4xl font-bold text-white bg-gradient-to-r from-[#b4499d] to-[#f07e7f] bg-clip-text text-transparent">
+                  <h1 className="text-3xl xl:text-4xl font-bold text-white bg-gradient-to-r from-[#b4499d] to-[#f07e7f] bg-clip-text ">
                     {userData.userName}
                   </h1>
                   
