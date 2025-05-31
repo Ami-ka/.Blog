@@ -168,7 +168,7 @@ export default function PostCard({
             {/* Button shine effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700"></div>
             
-            <span className="relative flex items-center justify-center gap-2 text-sm">
+            <span className="relative flex items-center justify-center gap-2 text-sm text-center">
               Read more
               <svg 
                 className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" 

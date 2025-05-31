@@ -141,7 +141,7 @@ export default function Home() {
           <div className="space-y-8">
             {posts.map((post, index) => (
               <div
-                key={`${post.id || index}`}
+                key={`${index}`}
                 className="transform transition-all duration-700 ease-out"
                 style={{
                   animationDelay: `${index * 100}ms`,
