@@ -15,13 +15,13 @@ export default function Home() {
   const [nextPageUrl, setNextPageUrl] = useState("");
   const [hasMore, setHasMore] = useState(true);
   const router = useRouter();
-  
+
   // Ref для предотвращения множественных запросов
   const isLoadingRef = useRef(false);
 
   // Функция для безопасного получения токена
   const getToken = useCallback(() => {
-    return typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    return typeof window !== "undefined" ? localStorage.getItem("token") : null;
   }, []);
 
   // Функция для загрузки дополнительных постов
@@ -32,11 +32,11 @@ export default function Home() {
 
     isLoadingRef.current = true;
     setLoadingMore(true);
-    
+
     try {
       const token = getToken();
       let response = null;
-      
+
       if (!token) {
         response = await getPostsByIndex(0, -1, nextPageUrl);
       } else {
@@ -44,26 +44,28 @@ export default function Home() {
         response = await getPostsByIndex(0, user.data.userData.id, nextPageUrl);
       }
 
-      console.log('Loading more posts:', response);
-      
+      console.log("Loading more posts:", response);
+
       // Проверяем, что ответ содержит данные
       if (response?.data?.page?.data) {
         // Добавляем новые посты к существующим
-        setPosts(prevPosts => [...prevPosts, ...response.data.page.data]);
-        
+        setPosts((prevPosts) => [...prevPosts, ...response.data.page.data]);
+
         // Обновляем URL следующей страницы
         const newNextPageUrl = response.data.page.next_page_url;
-        setNextPageUrl(newNextPageUrl || "");
-        
+        const httpsUrl = newNextPageUrl
+          ? newNextPageUrl.replace("http://", "https://")
+          : "";
+        setNextPageUrl(httpsUrl);
+
         // Проверяем, есть ли еще страницы
         setHasMore(!!newNextPageUrl);
       } else {
         // Если данных нет, останавливаем пагинацию
         setHasMore(false);
       }
-      
     } catch (error) {
-      console.error('Error loading more posts:', error);
+      console.error("Error loading more posts:", error);
       setError(error);
       // При ошибке также останавливаем пагинацию
       setHasMore(false);
@@ -81,7 +83,7 @@ export default function Home() {
     }
 
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    
+
     // Проверяем, что пользователь прокрутил почти до конца (отступ 200px)
     if (scrollTop + clientHeight >= scrollHeight - 200) {
       loadMorePosts();
@@ -91,7 +93,7 @@ export default function Home() {
   // Throttled версия обработчика скролла для производительности
   const throttledHandleScroll = useCallback(() => {
     if (isLoadingRef.current) return;
-    
+
     // Простая реализация throttle
     clearTimeout(throttledHandleScroll.timeoutId);
     throttledHandleScroll.timeoutId = setTimeout(handleScroll, 100);
@@ -104,7 +106,7 @@ export default function Home() {
         setLoading(true);
         const token = getToken();
         let response2 = null;
-        
+
         if (!token) {
           response2 = await getPostsByIndex(0, -1);
         } else {
@@ -121,11 +123,10 @@ export default function Home() {
           setPosts([]);
           setHasMore(false);
         }
-        
+
         console.log("ответ", response2);
-        
       } catch (error) {
-        console.error('Error fetching initial posts:', error);
+        console.error("Error fetching initial posts:", error);
         setError(error);
         setPosts([]);
         setHasMore(false);
@@ -133,16 +134,16 @@ export default function Home() {
         setLoading(false);
       }
     }
-    
+
     fetchInfo();
   }, [getToken]);
 
   // Добавляем/удаляем обработчик скролла
   useEffect(() => {
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    
+    window.addEventListener("scroll", throttledHandleScroll, { passive: true });
+
     return () => {
-      window.removeEventListener('scroll', throttledHandleScroll);
+      window.removeEventListener("scroll", throttledHandleScroll);
       // Очищаем таймаут при размонтировании
       if (throttledHandleScroll.timeoutId) {
         clearTimeout(throttledHandleScroll.timeoutId);
@@ -178,11 +179,15 @@ export default function Home() {
             <span className="text-red-400 text-xl">!</span>
           </div>
           <div>
-            <h2 className="text-white text-lg font-medium mb-2">Failed to load posts</h2>
-            <p className="text-gray-400 text-sm">Please try refreshing the page</p>
+            <h2 className="text-white text-lg font-medium mb-2">
+              Failed to load posts
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Please try refreshing the page
+            </p>
           </div>
-          <button 
-            onClick={() => window.location.reload()} 
+          <button
+            onClick={() => window.location.reload()}
             className="px-4 py-2 bg-[#b4499d] text-white rounded-lg hover:bg-[#b4499d]/80 transition-colors"
           >
             Refresh
@@ -227,8 +232,12 @@ export default function Home() {
               <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#44435a]/50 flex items-center justify-center">
                 <span className="text-gray-400 text-2xl">📝</span>
               </div>
-              <h3 className="text-white text-lg font-medium mb-2">No posts yet</h3>
-              <p className="text-gray-400">Be the first to share something amazing!</p>
+              <h3 className="text-white text-lg font-medium mb-2">
+                No posts yet
+              </h3>
+              <p className="text-gray-400">
+                Be the first to share something amazing!
+              </p>
             </div>
           ) : (
             <>
@@ -254,8 +263,14 @@ export default function Home() {
                   <div className="inline-flex items-center gap-3 px-8 py-4 bg-[#44435a]/50 backdrop-blur-sm rounded-2xl border border-[#44435a]">
                     <div className="flex space-x-1">
                       <div className="w-2 h-2 bg-[#b4499d] rounded-full animate-pulse"></div>
-                      <div className="w-2 h-2 bg-[#f07e7f] rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                      <div className="w-2 h-2 bg-[#b4499d] rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                      <div
+                        className="w-2 h-2 bg-[#f07e7f] rounded-full animate-pulse"
+                        style={{ animationDelay: "0.2s" }}
+                      ></div>
+                      <div
+                        className="w-2 h-2 bg-[#b4499d] rounded-full animate-pulse"
+                        style={{ animationDelay: "0.4s" }}
+                      ></div>
                     </div>
                     <span className="text-gray-300 text-sm font-medium">
                       Loading more posts...
