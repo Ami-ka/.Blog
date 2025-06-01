@@ -186,7 +186,7 @@ export default function PostView() {
             <EditorContent
               editor={editor}
               role="presentation"
-              className="simple-editor-content prose prose-invert max-w-none"
+              className="simple-editor-content prose prose-invert max-w-none bg-[#302F3F] rounded-3xl h-fit"
             />
           </div>
           {/* Post Metadata */}

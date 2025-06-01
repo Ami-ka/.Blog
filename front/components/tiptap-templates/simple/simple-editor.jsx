@@ -162,7 +162,8 @@ const MobileToolbarContent = ({ type, onBack }) => (
 
 // }
 
-export function SimpleEditor({editable, content, heading,IsPosting, postId}) {
+export function SimpleEditor({editable, content, heading,IsPosting, postId, className=""}) {
+  className = "simple-editor-content flex! flex-col bg-[#302F3F] rounded-3xl mt-100 " + className  
 
   async function handleSubmit(e){
     
@@ -305,8 +306,7 @@ export function SimpleEditor({editable, content, heading,IsPosting, postId}) {
           <EditorContent
             editor={editor}
             role="presentation"
-            className="simple-editor-content flex! flex-col bg-[#302F3F] rounded-3xl mt-100
-             "
+            className={className}
           >
             <form className=" px-2 flex justify-center  ml-4 mt-8" >
               <Button onClick={handleSubmit} className="h-[36px] w-[36px]  mr-4  bg-[#B4499D]!  rounded-full! hover:bg-[var(--orange)]! transition-colors! duration-300 font-bold!    " >

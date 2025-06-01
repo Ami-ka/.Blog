@@ -53,8 +53,5 @@ div.tiptap.ProseMirror{
     border-radius: 8px;
     padding: 1rem;
     
-    border-color: rgba(240, 126, 127, 0.3);
-    border-width: 0.2vh;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     color: white;
 }
