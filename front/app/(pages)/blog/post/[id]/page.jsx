@@ -88,8 +88,8 @@ export default function PostView() {
         console.log("Fetched post:", response);
         setPost(response.data.post);
       } catch (error) {
-        console.error("Ошибка при загрузке поста:", error);
-        setError("Не удалось загрузить пост");
+        console.error("Loading error:", error);
+        setError("Post wasn't loaded");
       } finally {
         setLoading(false);
       }
@@ -104,9 +104,9 @@ export default function PostView() {
   useEffect(() => {
     if (editor && post?.content) {
       console.log("Setting editor content:", post.content);
-      
+
       try {
-        if (typeof post.content === 'string') {
+        if (typeof post.content === "string") {
           // Если контент - это JSON строка, парсим её
           const parsedContent = JSON.parse(post.content);
           editor.commands.setContent(parsedContent);
@@ -116,70 +116,147 @@ export default function PostView() {
           editor.commands.setContent(post.content);
           console.log("Content set as object:", post.content);
         }
-        
+
         // Убеждаемся, что редактор не редактируемый
         editor.setEditable(false);
-        
       } catch (error) {
         console.error("Error setting editor content:", error);
         // Fallback - устанавливаем сообщение об ошибке
-        editor.commands.setContent('<p>Ошибка загрузки контента поста</p>');
+        editor.commands.setContent("<p>Ошибка загрузки контента поста</p>");
       }
     }
   }, [editor, post]);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-64">
-        <div className="text-white">Загрузка поста...</div>
+      <div
+        className="min-h-screen flex justify-center items-center"
+        style={{ backgroundColor: "#44435a" }}
+      >
+        <div className="flex flex-col items-center space-y-4">
+          <div className="animate-pulse">
+            <div
+              className="w-8 h-8 rounded-full border-4 border-t-transparent animate-spin"
+              style={{ borderColor: "#f07e7f" }}
+            ></div>
+          </div>
+          <div className="text-white text-lg font-medium">Loading...</div>
+        </div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="flex justify-center items-center min-h-64">
-        <div className="text-red-500">{error}</div>
+      <div
+        className="min-h-screen flex justify-center items-center"
+        style={{ backgroundColor: "#44435a" }}
+      >
+        <div
+          className="text-center p-8 rounded-2xl border-2"
+          style={{ backgroundColor: "#3a3950", borderColor: "#f07e7f" }}
+        >
+          <div className="text-6xl mb-4">⚠️</div>
+          <div
+            className="text-xl font-semibold mb-2"
+            style={{ color: "#f07e7f" }}
+          >
+            {error}
+          </div>
+          <div className="text-gray-300">Please try again later</div>
+        </div>
       </div>
     );
   }
 
   if (!post) {
     return (
-      <div className="flex justify-center items-center min-h-64">
-        <div className="text-white">Пост не найден</div>
+      <div
+        className="min-h-screen flex justify-center items-center"
+        style={{ backgroundColor: "#44435a" }}
+      >
+        <div
+          className="text-center p-8 rounded-2xl"
+          style={{ backgroundColor: "#3a3950" }}
+        >
+          <div className="text-6xl mb-4">📝</div>
+          <div className="text-xl font-semibold text-white mb-2">
+            Пост не найден
+          </div>
+          <div className="text-gray-300">
+            The post you're looking for doesn't exist
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <EditorContext.Provider value={{ editor }}>
-        
-        <div className="content-wrapper">
-          {/* Заголовок поста */}
-          <div className="px-2 flex justify-center ml-4 mt-8 mb-6">
-            <h1 className="text-center font-bold text-3xl text-white w-full">
-              {post.heading}
-            </h1>
+    <div className="min-h-screen">
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        <EditorContext.Provider value={{ editor }}>
+          {/* Hero Section with Post Title */}
+          <div className="text-center mb-12">
+            <div
+              className="inline-block p-1 rounded-3xl mb-6"
+              style={{
+                background: "linear-gradient(135deg, #f07e7f 0%, #b4499d 100%)",
+              }}
+            >
+              <div
+                className="px-8 py-4 rounded-3xl"
+                style={{ backgroundColor: "#44435a" }}
+              >
+                <h2 className="text-lg md:text-xl lg:text-2xl xl:text-2xl  font-bold text-white leading-tight">
+                  {post.heading}
+                </h2>
+              </div>
+            </div>
+
+            
+            <div className="flex items-center justify-center mt-8 mb-4">
+              <div className="h-px bg-gradient-to-r from-transparent via-[#b4499d]/50 to-transparent w-32"></div>
+              <div className="mx-4 w-2 h-2 bg-gradient-to-r from-[#b4499d] to-[#f07e7f] rounded-full"></div>
+              <div className="h-px bg-gradient-to-r from-transparent via-[#f07e7f]/50 to-transparent w-32"></div>
+            </div>
           </div>
-          
-          {/* Контент поста - используем те же стили что в SimpleEditor */}
-          <EditorContent
-            editor={editor}
-            role="presentation"
-            className="simple-editor-content flex! flex-col bg-[#302F3F] rounded-3xl"
-          />
-        </div>
-        
-        {/* Дополнительная информация о посте */}
-        {post.createdAt && (
-          <div className="mt-8 pt-4 border-t border-gray-600 text-gray-400 text-sm text-center">
-            Создано: {new Date(post.createdAt).toLocaleDateString('ru-RU')}
+
+          {/* Main Content Container */}
+          <div className="relative">
+            <EditorContent
+              editor={editor}
+              role="presentation"
+              className="simple-editor-content prose prose-invert max-w-none"
+            />
           </div>
-        )}
-        
-      </EditorContext.Provider>
+          {/* Post Metadata */}
+          {post.created_at && (
+            <div className="mt-12 text-center">
+              <div
+                className="inline-flex items-center space-x-3 px-6 py-3 rounded-full"
+                style={{ backgroundColor: "#3a3950" }}
+              >
+                <div
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: "#b4499d" }}
+                ></div>
+                <span className="text-gray-300 text-sm font-medium">
+                  Created:{" "}
+                  {new Date(post.created_at).toLocaleDateString("en-En", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+                <div
+                  className="w-2 h-2 rounded-full"
+                  style={{ backgroundColor: "#f07e7f" }}
+                ></div>
+              </div>
+            </div>
+          )}
+        </EditorContext.Provider>
+      </div>
     </div>
   );
 }
