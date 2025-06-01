@@ -129,64 +129,24 @@ export default function PostView() {
 
   if (loading) {
     return (
-      <div
-        className="min-h-screen flex justify-center items-center"
-        style={{ backgroundColor: "#44435a" }}
-      >
-        <div className="flex flex-col items-center space-y-4">
-          <div className="animate-pulse">
-            <div
-              className="w-8 h-8 rounded-full border-4 border-t-transparent animate-spin"
-              style={{ borderColor: "#f07e7f" }}
-            ></div>
-          </div>
-          <div className="text-white text-lg font-medium">Loading...</div>
-        </div>
+      <div className="flex justify-center items-center min-h-64">
+        <div className="text-white">Загрузка поста...</div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div
-        className="min-h-screen flex justify-center items-center"
-        style={{ backgroundColor: "#44435a" }}
-      >
-        <div
-          className="text-center p-8 rounded-2xl border-2"
-          style={{ backgroundColor: "#3a3950", borderColor: "#f07e7f" }}
-        >
-          <div className="text-6xl mb-4">⚠️</div>
-          <div
-            className="text-xl font-semibold mb-2"
-            style={{ color: "#f07e7f" }}
-          >
-            {error}
-          </div>
-          <div className="text-gray-300">Please try again later</div>
-        </div>
+      <div className="flex justify-center items-center min-h-64">
+        <div className="text-red-500">{error}</div>
       </div>
     );
   }
 
   if (!post) {
     return (
-      <div
-        className="min-h-screen flex justify-center items-center"
-        style={{ backgroundColor: "#44435a" }}
-      >
-        <div
-          className="text-center p-8 rounded-2xl"
-          style={{ backgroundColor: "#3a3950" }}
-        >
-          <div className="text-6xl mb-4">📝</div>
-          <div className="text-xl font-semibold text-white mb-2">
-            Пост не найден
-          </div>
-          <div className="text-gray-300">
-            The post you're looking for doesn't exist
-          </div>
-        </div>
+      <div className="flex justify-center items-center min-h-64">
+        <div className="text-white">Пост не найден</div>
       </div>
     );
   }
