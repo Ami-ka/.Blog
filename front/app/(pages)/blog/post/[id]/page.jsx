@@ -130,7 +130,7 @@ export default function PostView() {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-64">
-        <div className="text-white">Загрузка поста...</div>
+        <div className="text-white">Loading...</div>
       </div>
     );
   }
@@ -146,7 +146,7 @@ export default function PostView() {
   if (!post) {
     return (
       <div className="flex justify-center items-center min-h-64">
-        <div className="text-white">Пост не найден</div>
+        <div className="text-white">Not found</div>
       </div>
     );
   }
