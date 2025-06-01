@@ -89,7 +89,7 @@ return (
             <div className="relative">
               <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="group flex items-center gap-2 px-4 py-2.5 bg-[#44435a] border border-[#44435a] rounded-xl transition-all duration-300 hover:border-[#b4499d]/50 hover:shadow-[0_0_15px_rgba(180,73,157,0.1)] min-w-[120px]"
+                className="group flex items-center gap-2 px-4 py-3.5 bg-[#44435a] border border-[#44435a] rounded-2xl transition-all duration-300 hover:border-[#b4499d]/50 hover:shadow-[0_0_15px_rgba(180,73,157,0.1)] min-w-[120px]"
               >
                 <currentSort.icon 
                   size={16} 
@@ -339,7 +339,7 @@ return (
           <div className="relative">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="group flex items-center gap-1.5 px-2.5 sm:px-3 py-2 bg-[#44435a] border border-[#44435a] rounded-lg transition-all duration-300 hover:border-[#b4499d]/50 hover:shadow-[0_0_15px_rgba(180,73,157,0.1)]"
+              className="group flex items-center gap-1.5 px-2.5 sm:px-3 py-3 bg-[#44435a] border border-[#44435a] rounded-xl transition-all duration-300 hover:border-[#b4499d]/50 hover:shadow-[0_0_15px_rgba(180,73,157,0.1)]"
             >
               <currentSort.icon 
                 size={14} 
