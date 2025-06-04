@@ -16,7 +16,7 @@ blog/
 - **Framework**: Laravel 12.x
 - **Language**: PHP 8.2+
 - **Authentication**: Laravel Sanctum
-- **Database**: MySQL/SQLite
+- **Database**: PostgreSQL
 - **Server**: PHP Built-in Server (Development)
 
 ### Frontend
